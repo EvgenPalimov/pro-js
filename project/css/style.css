@@ -116,6 +116,25 @@ body {
   background-color: #FFFFFF;
 }
 
+.catalog__header-basket-wrp {
+  position: relative;
+}
+
+.catalog__header-basket-modal {
+  display: block;
+  position: absolute;
+  background-color: #fff;
+  padding: 20px 20px;
+  z-index: 2000;
+}
+
+.catalog__header-basket-modal-close {
+  color: #000;
+  float: right;
+  font-size: 30px;
+  cursor: pointer;
+}
+
 .catalog__products {
   display: -webkit-box;
   display: -ms-flexbox;
