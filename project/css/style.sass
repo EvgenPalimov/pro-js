@@ -82,17 +82,74 @@ body
     position: relative
 
 .catalog__header-basket-modal
-    display: block
+    display: none
     position: absolute
     background-color: #fff
-    padding: 20px 20px
-    z-index: 2000
+    padding: 10px
+    z-index: 100
+    top: 56px
+    right: -85px
+    border-radius: 15px
+    filter: drop-shadow(10px 10px 7px rgba(0, 0, 0, 0.13))
+
+    &:after
+        content: ''
+        position: absolute
+        right: 95px
+        top: -40px
+        border: 20px solid transparent
+        border-bottom: 20px solid white
 
 .catalog__header-basket-modal-close
     color: #000
     float: right
     font-size: 30px
     cursor: pointer
+
+.catalog__header-basket-products
+    padding-inline-start: 0
+
+.catalog__header-basket-products-item
+    text-decoration: none
+    display: flex
+    margin: 10px 0
+
+.catalog__header-basket-products-item-wrp
+    margin: 0 30px
+    min-width: 300px
+    display: flex
+    flex-direction: column
+
+.catalog__header-basket-products-item-wrp-2
+    display: flex
+    flex-direction: column
+    align-items: center
+    min-width: 150px
+
+.catalog__header-basket-products-item-title
+    font-size: 28px
+    line-height: 30px
+    font-weight: 500
+    margin-bottom: 20px
+
+.catalog__header-basket-products-item-photo
+    width: 100px
+    height: 100px
+
+.catalog__header-basket-products-item-txt
+    font-size: 15px
+    line-height: 17px
+    font-weight: 300
+
+.catalog__header-basket-products-item-btn
+    width: 60px
+    height: 40px
+    border-radius: 5px
+    background-color: black
+    border: none
+
+    & span
+        color: white
 
 .catalog__products
     display: flex

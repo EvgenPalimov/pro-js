@@ -32,7 +32,7 @@ class ProductList {
     // }
 
     _totalPriceOfProducts() {
-        let sumProducts = this.products.reduce((sum, { price, quantity }) => sum + price, 0)
+        let sumProducts = this.products.reduce((sum, { price }) => sum + price, 0)
         console.log(`Сумма всех товаров, состовляет: ${sumProducts} руб.`)
     }
 
@@ -77,15 +77,16 @@ class ShoppingCart {
 
         this.container = container;
         this.products = [];
-        this._getProducts()
+        this._getBasket();
+        this._getProducts();
     }
 
     _getBasket() {
         this.btn.onclick = () => {
             if (this.modal.style.display == 'none') {
-                this.modal.style.display = 'block'
+                this.modal.style.display = 'block';
             } else {
-                this.modal.style.display = 'none'
+                this.modal.style.display = 'none';
             }
 
         }
@@ -95,17 +96,24 @@ class ShoppingCart {
         return fetch(`${API}/getBasket.json`)
             .then(result => result.json())
             .then(data => {
-                this.products = data;
+                this.products = data.contents;
                 this.render();
+                this._changeCountProduct();
             })
             .catch(error => {
                 console.log(error);
             })
     }
 
+    _changeCountProduct() {
+        const block = document.querySelector('#btn-cart-counter');
+        let text = this.products.length;
+        block.innerHTML = text;
+    }
+
     render() {
         const block = document.querySelector(this.container);
-        for (let product in this.products) {
+        for (let product of this.products) {
             const item = new ElementsOfBasket(product);
             block.insertAdjacentHTML('beforeend', item.render());
         }
@@ -113,29 +121,28 @@ class ShoppingCart {
 }
 
 class ElementsOfBasket {
-    constructor(product, image = 'https://via.placeholder.com/50x50') {
-        this.id = product.contents.id_product;
-        this.title = product.contents.product_name;
-        this.price = product.contents.price;
+    constructor(product, image = 'https://via.placeholder.com/75x75') {
+        this.id = product.id_product;
+        this.title = product.product_name;
+        this.price = product.price;
         this.image = image;
-        this.quantity = product.contents.quantity;
-        this.amount = product.amount;
-        this.countProducts = product.countGoods;
+        this.quantity = product.quantity;
     }
 
     render() {
         return `<li class="catalog__header-basket-products-item">
                     <img class="catalog__header-basket-products-item-photo" src="${this.image}" alt="product photo">
                     <div class="catalog__header-basket-products-item-wrp">
-                        <h2 class="title_2">${this.title}</h2>
-                        <span class="txt">${this.amount} руб.</span>
-                        <span class="txt">${this.countProducts} шт.</span>
+                        <span class="catalog__header-basket-products-item-title">${this.title}</span>
+                        <span class="txt">Количество: ${this.quantity} шт.</span>
+                        <span class="catalog__header-basket-products-item-txt">Общая стоимость товаров: ${this.quantity * this.price} руб.</span>
                     </div>
-                    <div>
+                    <div class="catalog__header-basket-products-item-wrp-2">
+                        <span class="catalog__header-basket-products-item-title">${this.price} руб.</span>
                         <button class="catalog__header-basket-products-item-btn txt">
                           <span>&times;</span>
                         </button>
-                        <span class="txt">${this.price} руб.</span>
+                        
                     </div>
                 </li>`
     }
@@ -143,5 +150,4 @@ class ElementsOfBasket {
 
 let list = new ProductList();
 let listBasket = new ShoppingCart();
-let basket_modal = new ShoppingCart();
-basket_modal._getBasket()
+
