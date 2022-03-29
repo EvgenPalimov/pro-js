@@ -1,25 +1,38 @@
+const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
+
 class ProductList {
     constructor(container = '.catalog__products') {
         this.container = container;
         this.products = [];
-        this._fetchProducts();
-        this._totalPriceOfProducts()
-        this.render();
+        this._getProducts()
+
     }
 
-    _fetchProducts() {
-        this.products = [
-            { id: 1, title: 'Notebook', price: 55000, quantity: 3, image: 'image/product-image-notebook.jpg' },
-            { id: 2, title: 'Mouse', price: 2000, quantity: 5, image: 'image/product-image-mouse.jpg' },
-            { id: 3, title: 'Keyboard', price: 1500, quantity: 7, image: 'image/product-image-keyboard.jpg' },
-            { id: 4, title: 'Gamepad', price: 3500, quantity: 8, image: 'image/product-image-gamepad.jpg' },
-            { id: 4, title: 'SoundBar', price: 18500, quantity: 9, image: 'image/product-image-soundbar.jpg' },
-            { id: 4, title: 'Monitor', price: 50, quantity: 10, image: 'image/product-image-monitor.jpg' },
-        ];
+    _getProducts() {
+        return fetch(`${API}/catalogData.json`)
+            .then(result => result.json())
+            .then(data => {
+                this.products = data;
+                this.render();
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
+
+    // _fetchProducts() {
+    //     this.products = [
+    //         { id: 1, title: 'Notebook', price: 55000, quantity: 3, image: 'image/product-image-notebook.jpg' },
+    //         { id: 2, title: 'Mouse', price: 2000, quantity: 5, image: 'image/product-image-mouse.jpg' },
+    //         { id: 3, title: 'Keyboard', price: 1500, quantity: 7, image: 'image/product-image-keyboard.jpg' },
+    //         { id: 4, title: 'Gamepad', price: 3500, quantity: 8, image: 'image/product-image-gamepad.jpg' },
+    //         { id: 4, title: 'SoundBar', price: 18500, quantity: 9, image: 'image/product-image-soundbar.jpg' },
+    //         { id: 4, title: 'Monitor', price: 50, quantity: 10, image: 'image/product-image-monitor.jpg' },
+    //     ];
+    // }
 
     _totalPriceOfProducts() {
-        let sumProducts = this.products.reduce((sum, { price, quantity }) => sum + price * quantity, 0)
+        let sumProducts = this.products.reduce((sum, { price }) => sum + price, 0)
         console.log(`Сумма всех товаров, состовляет: ${sumProducts} руб.`)
     }
 
@@ -33,11 +46,11 @@ class ProductList {
 }
 
 class ProductItem {
-    constructor(product) {
-        this.id = product.id;
-        this.title = product.title;
+    constructor(product, image = 'image/product-image-mouse.jpg') {
+        this.id = product.id_product;
+        this.title = product.product_name;
         this.price = product.price;
-        this.image = product.image;
+        this.image = image;
     }
 
     render() {
@@ -58,71 +71,83 @@ class ProductItem {
 }
 
 class ShoppingCart {
-    /**
-     * 
-     * @param user - Данный пользователя
-     * @param order - Заказ 
-     */
-    constructor(user, order) {
-        this.user = user
-        this.order = order
+    constructor(container = '.catalog__header-basket-products') {
+        this.modal = document.getElementById('basket-modal');
+        this.btn = document.getElementById('btn-basket-modal');
+
+        this.container = container;
+        this.products = [];
+        this._getBasket();
+        this._getProducts();
     }
 
-    createOrder(user) {
-        // Создание заказа для пользователя
+    _getBasket() {
+        this.btn.onclick = () => {
+            if (this.modal.style.display == 'none') {
+                this.modal.style.display = 'block';
+            } else {
+                this.modal.style.display = 'none';
+            }
+
+        }
     }
 
-    editOrder(user, order) {
-        // Редактирования заказа(Удалание товарова, редактирование колчиства)
+    _getProducts() {
+        return fetch(`${API}/getBasket.json`)
+            .then(result => result.json())
+            .then(data => {
+                this.products = data.contents;
+                this.render();
+                this._changeCountProduct();
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
-    deleteOrder(order) {
-        // Удаление заказа
-    }
-
-    renderBasket() {
-        // Формируем окончательный код, со всеми нужными данными
-    }
-
-
-}
-
-class ElementsOfBasket {
-    /**
-     * 
-     * @param products - Список товаров для покупки
-     * @param user - Данные пользователя
-     * @param elementsPay - Элементы оплаты
-     * @param dopContent - Дополнительный контент для корзины
-     */
-    constructor(products, user, elementsPay, dopContent) {
-        this.products = products
-        this.elementsPay = elementsPay
-        this.dopContent = dopContent
-        this.user = user
-    }
-
-    createListOfProducts(products) {
-        // Формирование списка товаров
-    }
-
-    fillingInUserData(user) {
-        // Заполнение нужных полей, данным пользователя
-    }
-
-    formationPaymentMethods(elementsPay) {
-        //Формирование систем оплаты
-    }
-
-    addingDopContent(dopContent) {
-        // Добавление дополнительного контента
+    _changeCountProduct() {
+        const block = document.querySelector('#btn-cart-counter');
+        let text = this.products.length;
+        block.innerHTML = text;
     }
 
     render() {
-        // Формируем код, для передачи в основной класс
+        const block = document.querySelector(this.container);
+        for (let product of this.products) {
+            const item = new ElementsOfBasket(product);
+            block.insertAdjacentHTML('beforeend', item.render());
+        }
+    }
+}
+
+class ElementsOfBasket {
+    constructor(product, image = 'https://via.placeholder.com/75x75') {
+        this.id = product.id_product;
+        this.title = product.product_name;
+        this.price = product.price;
+        this.image = image;
+        this.quantity = product.quantity;
     }
 
+    render() {
+        return `<li class="catalog__header-basket-products-item">
+                    <img class="catalog__header-basket-products-item-photo" src="${this.image}" alt="product photo">
+                    <div class="catalog__header-basket-products-item-wrp">
+                        <span class="catalog__header-basket-products-item-title">${this.title}</span>
+                        <span class="txt">Количество: ${this.quantity} шт.</span>
+                        <span class="catalog__header-basket-products-item-txt">Общая стоимость товаров: ${this.quantity * this.price} руб.</span>
+                    </div>
+                    <div class="catalog__header-basket-products-item-wrp-2">
+                        <span class="catalog__header-basket-products-item-title">${this.price} руб.</span>
+                        <button class="catalog__header-basket-products-item-btn txt">
+                          <span>&times;</span>
+                        </button>
+                        
+                    </div>
+                </li>`
+    }
 }
 
 let list = new ProductList();
+let listBasket = new ShoppingCart();
 
