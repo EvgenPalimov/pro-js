@@ -1,0 +1,10 @@
+.wrp {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.wrp-text {
+  margin: 40px;
+}
+/*# sourceMappingURL=style.css.map */
