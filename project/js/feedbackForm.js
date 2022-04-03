@@ -41,8 +41,7 @@ form.onsubmit = function (event) {
     event.preventDefault()
     let nameVal = inputName.value,
         phoneNumberVal = inputPhoneNumber.value,
-        emailVal = inputEmail.value,
-        emptyInputs = Array.from(formInputs).filter(input => input.value === '');
+        emailVal = inputEmail.value;
 
     formInputs.forEach(input => {
         if (input.value === '') {
@@ -51,10 +50,6 @@ form.onsubmit = function (event) {
             deleteMessageError(input);
         }
     });
-
-    // if (emptyInputs.length !== 0) {
-    //     return false;
-    // }
 
     if (!validateEmail(emailVal)) {
         messageError('Email not valid', inputEmail);
