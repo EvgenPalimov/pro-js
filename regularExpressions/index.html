@@ -30,7 +30,7 @@
 
             reader.addEventListener("load", () => {
                 // this will then display a text file
-                elementaryContent.innerText = reader.result.replace(/\B'|'\B/g, "\"");
+                elementaryContent.innerText = reader.result;
                 content.innerText = reader.result.replace(/\B'|'\B/g, "\"");
             }, false);
 

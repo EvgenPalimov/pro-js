@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Feedback form</title>
+</head>
+
+<body>
+    <header>
+        <div class="catalog__header padding-site">
+            <a href="index.html" class="catalog__header-title">online store</a>
+        </div>
+    </header>
+    <main class="padding-site">
+        <form action="#" id="form">
+            <fieldset class="create-form">
+                <legend class="create-form-legend">Feedback form</legend>
+                <label class="create-form-label" htmlFor="name">Name:</label>
+                <input class="create-form-input js-input-name" type="text" id="name" name="name"
+                    placeholder="Input name" />
+                <label class="create-form-label" htmlFor="phone-number">Phone number:</label>
+                <input class="create-form-input js-input-phone-number" type="tel" id="phone-number" name="phoneNumber"
+                    placeholder="Input phone number" />
+                <label class="create-form-label" htmlFor="email">Email:</label>
+                <input class="create-form-input js-input-email" type="text" id="email" name="email"
+                    placeholder="Input e-mail" />
+                <label class="create-form-label" htmlFor="text">Text:</label>
+                <textarea class="create-form-input" type="text" id="text" name="text"
+                    placeholder="Input text of Feedback form"></textarea>
+                <input type="submit" class="create-form-button" id="send-form">
+            </fieldset>
+        </form>
+    </main>
+    <footer class="footer padding-site">
+        <p class="footer__copyright txt">© 2022 Brand All Rights Reserved.</p>
+    </footer>
+    <script src="js/feedbackForm.js"></script>
+</body>
+
+</html>
