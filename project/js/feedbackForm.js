@@ -10,7 +10,7 @@ function validateEmail(email) {
 }
 
 function validteName(name) {
-    let re = new RegExp("^.*[^A-zА-яЁё].*$")
+    let re = /^[a-zа-яё]+$/i;
     return re.test((name));
 }
 
@@ -20,23 +20,25 @@ function validtePhoneNumber(phoneNumber) {
 }
 
 function messageError(text, element) {
-    element.classList.add('invalid');
-    let error = document.createElement('span');
-    error.classList.add('msgError');
-    error.innerText = text;
-    element.insertAdjacentElement('afterend', error);
-}
-
-function deleteMessageError(element) {
-    element.classList.remove('invalid');
-    element.classList.add('valid');
-    let errors = [...document.querySelectorAll('.msgError')];
-    for (let error of errors) {
-        error.remove();
+    if (!element.classList.contains('invalid')) {
+        element.classList.add('invalid');
+        let error = document.createElement('span');
+        error.classList.add('msgError');
+        error.innerText = text;
+        element.insertAdjacentElement('afterend', error);
     }
 }
 
-form.onsubmit = function () {
+function deleteMessageError(element) {
+    {
+        element.classList.remove('invalid');
+        element.classList.add('valid');
+        element.nextElementSibling.remove();
+    }
+}
+
+form.onsubmit = function (event) {
+    event.preventDefault()
     let nameVal = inputName.value,
         phoneNumberVal = inputPhoneNumber.value,
         emailVal = inputEmail.value,
@@ -45,35 +47,30 @@ form.onsubmit = function () {
     formInputs.forEach(input => {
         if (input.value === '') {
             messageError('The field cannot be empty', input);
-        } else {
+        } else if (input.classList.contains('invalid')) {
             deleteMessageError(input);
         }
     });
 
-    if (emptyInputs.length !== 0) {
-        return false;
-    }
+    // if (emptyInputs.length !== 0) {
+    //     return false;
+    // }
 
     if (!validateEmail(emailVal)) {
         messageError('Email not valid', inputEmail);
-        return false;
-    } else {
-        deleteMessageError(inputEmail);
+    } else if (inputEmail.classList.contains('invalid')) {
+        deleteMessageError(input);
     }
 
-    if (validteName(nameVal)) {
+    if (!validteName(nameVal)) {
         messageError('The name should be made up of letters only', inputName);
-        return false;
-    } else {
-        deleteMessageError(inputEmail);
+    } else if (inputName.classList.contains('invalid')) {
+        deleteMessageError(inputName);
     }
 
     if (!validtePhoneNumber(phoneNumberVal)) {
         messageError('Specify the phone number in this format +7(000)000-0000', inputPhoneNumber);
-        return false;
-    } else {
+    } else if (inputPhoneNumber.classList.contains('invalid')) {
         deleteMessageError(inputPhoneNumber);
     }
-
 }
-
