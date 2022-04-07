@@ -45,6 +45,7 @@ const app = new Vue({
                 this.countProducts--;
             } else {
                 this.cartItems.splice(this.cartItems.indexOf(product), 1);
+                this.countProducts--;
             }
         }
     },
@@ -53,15 +54,15 @@ const app = new Vue({
         this.getJson(`${API + this.catalogUrl}`)
             .then(data => {
                 for (let el of data) {
-                    this.products.push(el);
-                    this.filtered.push(el);
+                    this.$data.products.push(el);
+                    this.$data.filtered.push(el);
                 }
             });
         this.getJson(`getProducts.json`)
             .then(data => {
                 for (let el of data) {
-                    this.products.push(el);
-                    this.products.push(el);
+                    this.$data.products.push(el);
+                    this.$data.products.push(el);
                 }
             })
     }
