@@ -10,7 +10,8 @@ const app = new Vue({
         countProducts: 0,
         imgCatalog: 'image/product-image-mouse.jpg',
         userSearch: '',
-        visible: false
+        visible: false,
+        error: false
     },
     methods: {
         filter() {
@@ -28,14 +29,20 @@ const app = new Vue({
         },
 
         addProduct(product) {
-            if (this.cartItems.indexOf(product) == -1) {
-                let itemCart = Object.assign(product, { quantity: 1 });
-                this.cartItems.push(itemCart);
-                this.countProducts++;
-            } else {
-                this.cartItems.find(item => item.id_product === product.id_product).quantity++;
-                this.countProducts++;
-            }
+            this.getJson(`${API}/addToBasket.json`)
+                .then(data => {
+                    if (data.result === 1) {
+                        let item = this.cartItems.find(item => item.id_product === product.id_product);
+                        if (item) {
+                            item.quantity++;
+                            this.countProducts++;
+                        } else {
+                            let itemCart = Object.assign({ quantity: 1 }, product);
+                            this.cartItems.push(itemCart);
+                            this.countProducts++;
+                        }
+                    }
+                })
         },
 
         deleteProduct(product) {
@@ -58,12 +65,12 @@ const app = new Vue({
                     this.$data.filtered.push(el);
                 }
             });
-        this.getJson(`getProducts.json`)
-            .then(data => {
-                for (let el of data) {
-                    this.$data.products.push(el);
-                    this.$data.products.push(el);
-                }
-            })
+        // this.getJson(`getProducts.json`)
+        //     .then(data => {
+        //         for (let el of data) {
+        //             this.$data.products.push(el);
+        //             this.$data.products.push(el);
+        //         }
+        //     })
     }
 })
