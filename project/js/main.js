@@ -28,14 +28,20 @@ const app = new Vue({
         },
 
         addProduct(product) {
-            if (this.cartItems.indexOf(product) == -1) {
-                let itemCart = Object.assign(product, { quantity: 1 });
-                this.cartItems.push(itemCart);
-                this.countProducts++;
-            } else {
-                this.cartItems.find(item => item.id_product === product.id_product).quantity++;
-                this.countProducts++;
-            }
+            this.getJson(`${API}/addToBasket.json`)
+                .then(data => {
+                    if (data.result === 1) {
+                        let item = this.cartItems.find(item => item.id_product === product.id_product);
+                        if (item) {
+                            item.quantity++;
+                            this.countProducts++;
+                        } else {
+                            let itemCart = Object.assign({ quantity: 1 }, product);
+                            this.cartItems.push(itemCart);
+                            this.countProducts++;
+                        }
+                    }
+                })
         },
 
         deleteProduct(product) {
