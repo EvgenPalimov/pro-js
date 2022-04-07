@@ -16,7 +16,7 @@ body {
   text-transform: capitalize;
 }
 
-.catalog__products-title {
+.products-title {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -45,6 +45,54 @@ body {
   margin-bottom: 35px;
 }
 
+.catalog__header-icons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.search-form {
+  margin-right: 50px;
+  border-bottom: 2px solid white;
+}
+
+.search-form:hover {
+  border-bottom-color: aqua;
+}
+
+.search-form:hover .search-from__svg {
+  fill: aqua;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+}
+
+.search-form input {
+  background-color: black;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 20px;
+  width: 180px;
+}
+
+.search-form button {
+  outline: none;
+  border: none;
+  background: black;
+}
+
+.search-form button > svg {
+  width: 25px;
+  fill: white;
+  -webkit-transition: -webkit-transform 500ms ease;
+  transition: -webkit-transform 500ms ease;
+  transition: transform 500ms ease;
+  transition: transform 500ms ease, -webkit-transform 500ms ease;
+}
+
 .catalog__header-title {
   color: white;
   margin-left: 15px;
@@ -59,11 +107,12 @@ body {
 }
 
 .catalog__header-btn-cart {
-  text-decoration: none;
   display: block;
+  background-color: black;
+  outline: none;
+  border: none;
   width: 32px;
   height: 29px;
-  text-decoration: none;
   position: relative;
   -webkit-transition: -webkit-transform 500ms ease;
   transition: -webkit-transform 500ms ease;
@@ -124,7 +173,6 @@ body {
 }
 
 .catalog__header-basket-modal {
-  display: none;
   position: absolute;
   background-color: #fff;
   padding: 10px;
@@ -155,6 +203,18 @@ body {
 .catalog__header-basket-products {
   -webkit-padding-start: 0;
           padding-inline-start: 0;
+}
+
+.catalog__header-basket-products-another {
+  width: 200px;
+  padding: 10px;
+  text-align: center;
+}
+
+.catalog__header-basket-products-another span {
+  line-height: 23px;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .catalog__header-basket-products-item {
@@ -221,7 +281,7 @@ body {
   color: white;
 }
 
-.catalog__products {
+.products {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -231,11 +291,11 @@ body {
   padding: 0;
 }
 
-.catalog__products-item-photo {
+.products-item-photo {
   max-width: 350px;
 }
 
-.catalog__products-item {
+.products-item {
   display: block;
   margin: 0 30px 30px 0;
   position: relative;
@@ -249,47 +309,47 @@ body {
           filter: drop-shadow(17px 19px 24px rgba(0, 0, 0, 0.13));
 }
 
-.catalog__products-item:hover {
+.products-item:hover {
   -webkit-transform: scale(1.15);
           transform: scale(1.15);
 }
 
-.catalog__products-item:hover .catalog__products-item-btn {
+.products-item:hover .products-item-btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.catalog__products-item:nth-child(3n+3) {
+.products-item:nth-child(3n+3) {
   margin-right: 0;
 }
 
-.catalog__products-item:hover .catalog__products-item-btn:hover {
+.products-item:hover .products-item-btn:hover {
   background-color: #ccc;
   color: #000;
   border: 1px solid #000;
 }
 
-.catalog__products-item:hover .catalog__products-item-btn :hover svg {
+.products-item:hover .products-item-btn :hover svg {
   fill: #000;
 }
 
-.catalog__products-item:hover .catalog__products-item-btn :active {
+.products-item:hover .products-item-btn :active {
   background-color: transparent;
   color: #fff;
   border: 1px solid #fff;
 }
 
-.catalog__products-item:hover .catalog__products-item-btn:active svg {
+.products-item:hover .products-item-btn:active svg {
   fill: #fff;
 }
 
-.catalog__products-item:hover .catalog__products-item-photo {
+.products-item:hover .products-item-photo {
   -webkit-filter: brightness(50%);
           filter: brightness(50%);
 }
 
-.catalog__products-item:hover .catalog__products-item-photo:before {
+.products-item:hover .products-item-photo:before {
   content: "";
   display: block;
   width: 100%;
@@ -297,14 +357,14 @@ body {
   background: rgba(58, 56, 56, 0.86);
 }
 
-.catalog__products-item-wrp {
+.products-item-wrp {
   padding: 0 18px 20px 18px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   text-align: left;
 }
 
-.catalog__products-item-btn {
+.products-item-btn {
   display: none;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -327,7 +387,7 @@ body {
   left: calc(50% - 80px);
 }
 
-.catalog__products-item-btn svg {
+.products-item-btn svg {
   fill: #fff;
   margin: 0 11px 0 0;
 }
