@@ -62,7 +62,7 @@ const app = new Vue({
             .then(data => {
                 for (let el of data) {
                     this.$data.products.push(el);
-                    this.$data.products.push(el);
+                    this.$data.filtered.push(el);
                 }
             })
     }
