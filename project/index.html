@@ -34,12 +34,15 @@
                 </div>
             </div>
         </header>
-        <main class="padding-site">
-            <div class="products-title">
-                <h2 class="title_2">products catalog</h2>
-                <p class="txt ">Shop for items based on&nbsp;what we&nbsp;featured in&nbsp;this week</p>
+        <main>
+            <div class="conteiner padding-site">
+                <error :error="error"></error>
+                <div class="products-title">
+                    <h2 class="title_2">products catalog</h2>
+                    <p class="txt ">Shop for items based on&nbsp;what we&nbsp;featured in&nbsp;this week</p>
+                </div>
+                <products :products="filtered" :img="imgCatalog" @add-product="addProduct"></products>
             </div>
-            <products :products="filtered" :img="imgCatalog" @add-product="addProduct"></products>
         </main>
         <footer class="footer padding-site">
             <p class="footer__copyright txt">© 2022 Brand All Rights Reserved.</p>
@@ -48,6 +51,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="js/FilterComponent.js"></script>
     <script src="js/ProductComponent.js"></script>
+    <script src="js/ErrorComponents.js"></script>
     <script src="js/CartComponent.js"></script>
     <script src="js/main.js"></script>
 </body>

@@ -25,6 +25,7 @@ const app = new Vue({
                 .then(result => result.json())
                 .catch(error => {
                     console.log(error);
+                    this.error = true;
                 })
         },
 
