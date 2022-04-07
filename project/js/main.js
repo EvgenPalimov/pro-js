@@ -65,12 +65,12 @@ const app = new Vue({
                     this.$data.filtered.push(el);
                 }
             });
-        // this.getJson(`getProducts.json`)
-        //     .then(data => {
-        //         for (let el of data) {
-        //             this.$data.products.push(el);
-        //             this.$data.products.push(el);
-        //         }
-        //     })
+        this.getJson(`getProducts.json`)
+            .then(data => {
+                for (let el of data) {
+                    this.$data.products.push(el);
+                    this.$data.filtered.push(el);
+                }
+            })
     }
 })
