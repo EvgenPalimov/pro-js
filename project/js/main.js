@@ -10,7 +10,8 @@ const app = new Vue({
         countProducts: 0,
         imgCatalog: 'image/product-image-mouse.jpg',
         userSearch: '',
-        visible: false
+        visible: false,
+        error: false
     },
     methods: {
         filter() {
@@ -24,6 +25,7 @@ const app = new Vue({
                 .then(result => result.json())
                 .catch(error => {
                     console.log(error);
+                    this.error = true;
                 })
         },
 

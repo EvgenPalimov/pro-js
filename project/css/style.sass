@@ -1,6 +1,5 @@
-body
-    margin: 0
-    padding: 0
+.conteiner
+    position: relative
 
 .txt
     font-size: 20px
@@ -329,6 +328,28 @@ body
     border: 1px solid red
     padding: 5px
     background-color: red
+
+.show-error
+    position: absolute
+    width: 100%
+    height: 100%
+    background-color: rgb(253, 247, 247)
+    z-index: 10000
+    top: 0
+    right: 0
+    display: flex
+    flex-direction: column
+    align-items: center
+
+    & span:first-child
+        margin-top: 50px
+
+    & span
+        font-size: 35px
+        line-height: 38px
+        font-weight: 500
+        margin: 20px 0
+        color: red
 
 .padding-site
     padding-left: calc(50% - 570px)
